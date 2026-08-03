@@ -1,0 +1,10 @@
+﻿name: T4
+on:
+  workflow_dispatch:
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo hello
+          echo world
