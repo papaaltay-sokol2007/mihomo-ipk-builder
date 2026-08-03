@@ -28,7 +28,7 @@ jobs:
     name: Build and release IPK packages
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout builder repo
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Go
@@ -37,22 +37,7 @@ jobs:
           go-version: ${{ inputs.go_version || '1.24.x' }}
 
       - name: Run build script
-        run: |
-          chmod +x build_mihomo_ipk.sh
-          ./build_mihomo_ipk.sh \
-            "${{ inputs.branch }}" \
-            "${{ inputs.upx }}" \
-            "${{ inputs.version_suffix }}"
-
-      - name: Read build info
-        id: info
-        run: |
-          if [ -f "$HOME/mihomo-ipk/BUILD_INFO" ]; then
-            cat "$HOME/mihomo-ipk/BUILD_INFO"
-          else
-            echo "BUILD_INFO not found"
-            exit 1
-          fi
+        run: bash build_mihomo_ipk.sh "${{ inputs.branch }}" "${{ inputs.upx }}" "${{ inputs.version_suffix }}"
 
       - name: Upload IPK artifacts
         uses: actions/upload-artifact@v4
@@ -64,21 +49,4 @@ jobs:
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          . "$HOME/mihomo-ipk/BUILD_INFO"
-          TAG="mihomo-${MIHOMO_BRANCH}-${MIHOMO_VERSION}"
-          TITLE="Mihomo IPK ${MIHOMO_DISPLAY_VERSION} (${MIHOMO_BRANCH})"
-          if gh release view "$TAG" --repo "${{ github.repository }}" >/dev/null 2>&1; then
-            echo "Release $TAG already exists, skipping creation."
-          else
-            gh release create "$TAG" \
-              "$HOME"/mihomo-ipk/*.ipk \
-              --repo "${{ github.repository }}" \
-              --title "$TITLE" \
-              --notes "Built from: ${MIHOMO_SOURCE}
-Branch: ${MIHOMO_BRANCH}
-Version: ${MIHOMO_DISPLAY_VERSION}
-Commit: ${MIHOMO_COMMIT}
-Architectures: aarch64-3.10, mipsel-3.4 (Entware / Keenetic)"
-            echo "Release created: $TAG"
-          fi
+        run: bash .github/release.sh
