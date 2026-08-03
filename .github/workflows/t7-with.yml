@@ -1,0 +1,12 @@
+﻿name: T7
+on:
+  workflow_dispatch:
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: foo
+          if-no-files-found: error
