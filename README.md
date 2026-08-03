@@ -18,8 +18,8 @@ Automatic build of **Mihomo (Clash.Meta)** IPK packages for **Entware** (Keeneti
 
 ## Быстрый старт / Quick start
 
-1. Откройте **Actions → Build Mihomo IPK & Release → Run workflow**.
-   Open **Actions → Build Mihomo IPK & Release → Run workflow**.
+1. Откройте **Actions → Build Mihomo IPK → Run workflow**.
+   Open **Actions → Build Mihomo IPK → Run workflow**.
 2. Выберите ветку (по умолчанию `Alpha`), при желании укажите суффикс версии.
    Choose the branch (default `Alpha`), optionally set a version suffix.
 3. После завершения готовые `.ipk` появятся в **GitHub Release** и в артефактах workflow.

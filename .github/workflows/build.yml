@@ -39,11 +39,16 @@ jobs:
       - name: Run build script
         run: bash build_mihomo_ipk.sh "${{ inputs.branch }}" "${{ inputs.upx }}" "${{ inputs.version_suffix }}"
 
+      - name: Copy IPKs to workspace
+        run: |
+          mkdir -p mihomo-ipk
+          cp "$HOME"/mihomo-ipk/*.ipk mihomo-ipk/
+
       - name: Upload IPK artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mihomo-ipk-${{ inputs.branch }}
-          path: ${{ runner.home }}/mihomo-ipk/*.ipk
+          path: mihomo-ipk/*.ipk
           if-no-files-found: error
 
       - name: Create GitHub release
