@@ -1,0 +1,16 @@
+﻿name: S1
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read build info
+        id: info
+        run: |
+          if [ -f "$HOME/mihomo-ipk/BUILD_INFO" ]; then
+            cat "$HOME/mihomo-ipk/BUILD_INFO"
+          else
+            echo "BUILD_INFO not found"
+            exit 1
+          fi
