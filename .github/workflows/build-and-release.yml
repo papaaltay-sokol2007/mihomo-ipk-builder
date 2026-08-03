@@ -4,19 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "Ветка papaaltay-sokol2007/mihomo (branch to build)"
+        description: "Branch of papaaltay-sokol2007/mihomo"
         required: true
         default: "Alpha"
       upx:
-        description: "Сжимать бинарники UPX (compress with UPX)"
+        description: "Compress binaries with UPX"
         type: boolean
         default: true
       version_suffix:
-        description: "Суффикс версии, напр. -fix-pppoe (version suffix)"
+        description: "Version suffix, e.g. -fix-pppoe"
         required: false
         default: ""
       go_version:
-        description: "Версия Go (Go version)"
+        description: "Go version"
         required: false
         default: "1.24.x"
 
@@ -50,7 +50,8 @@ jobs:
           if [ -f "$HOME/mihomo-ipk/BUILD_INFO" ]; then
             cat "$HOME/mihomo-ipk/BUILD_INFO"
           else
-            echo "BUILD_INFO not found"; exit 1
+            echo "BUILD_INFO not found"
+            exit 1
           fi
 
       - name: Upload IPK artifacts
@@ -78,7 +79,6 @@ jobs:
 Branch: ${MIHOMO_BRANCH}
 Version: ${MIHOMO_DISPLAY_VERSION}
 Commit: ${MIHOMO_COMMIT}
-
-Архитектуры / Architectures: aarch64-3.10, mipsel-3.4 (Entware / Keenetic)"
+Architectures: aarch64-3.10, mipsel-3.4 (Entware / Keenetic)"
             echo "Release created: $TAG"
           fi
