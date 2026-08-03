@@ -1,4 +1,4 @@
-name: Build Mihomo IPK & Release
+name: Build Mihomo IPK
 
 on:
   workflow_dispatch:
